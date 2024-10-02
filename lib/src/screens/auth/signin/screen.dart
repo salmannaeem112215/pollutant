@@ -1,7 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pollutant/src/routes/app_routes.dart';
 import 'package:pollutant/src/screens/auth/shared/form_card.dart';
 import 'package:pollutant/src/screens/auth/shared/form_primary_btn.dart';
+import 'package:pollutant/src/screens/auth/shared/heading_subheading.dart';
 import 'package:pollutant/src/screens/auth/shared/terms_of_use_btn.dart';
 import 'package:pollutant/src/screens/shared/logo.dart';
 
@@ -9,11 +12,25 @@ import '../shared/text_form_field.dart';
 
 class SigninScreen extends StatelessWidget {
   const SigninScreen({super.key});
-  toRegister() {}
+  toRegister() {
+    Get.toNamed(AppRoutes.rRegister);
+  }
+
+  onSigninTap() {
+    Get.offAllNamed(AppRoutes.rMain);
+  }
+
+  onForgetPassword() {
+    Get.toNamed(AppRoutes.rRecoverPassword);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: const SafeArea(
+        child: TermsOfUseBtn(),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,8 +42,14 @@ class SigninScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  HeadingSubheading(
+                    headingText: 'Sign In',
+                    subHeadingText: 'or Create',
+                    subHeadingTapText: 'an Account',
+                    onTap: toRegister,
+                  ),
                   SizedBox(
-                    height: 80,
+                    height: 50,
                   ),
                   MyTextFormField(
                     title: 'Email',
@@ -34,28 +57,28 @@ class SigninScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   MyTextFormField(
                     title: 'Password',
-                    trailingTitile: Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
+                    trailingTitile: GestureDetector(
+                      onTap: onForgetPassword,
+                      child: Text(
+                        'Forget Password?',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 35),
-                  FormPrimaryBtn(text: 'Signup', onTap: onSingupTap),
+                  FormPrimaryBtn(text: 'Sign In', onTap: onSigninTap),
                   SizedBox(height: 20),
                 ],
               ),
             ),
             const SizedBox(height: 50),
-            const TermsOfUseBtn(),
           ],
         ),
       ),
     );
   }
-
-  onSingupTap() {}
 }

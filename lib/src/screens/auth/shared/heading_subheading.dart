@@ -5,12 +5,12 @@ class HeadingSubheading extends StatelessWidget {
   const HeadingSubheading(
       {super.key,
       required this.headingText,
-      required this.subHeadingText,
-      required this.subHeadingTapText,
+      this.subHeadingText,
+      this.subHeadingTapText,
       this.onTap,
       this.subHeadingTrailingText});
   final String headingText;
-  final String subHeadingText;
+  final String? subHeadingText;
   final String? subHeadingTapText;
   final String? subHeadingTrailingText;
   final void Function()? onTap;
@@ -31,7 +31,8 @@ class HeadingSubheading extends StatelessWidget {
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            text: subHeadingText + (subHeadingTapText != null ? " " : ''),
+            text:
+                (subHeadingText ?? '') + (subHeadingTapText != null ? " " : ''),
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.grey,
@@ -42,9 +43,9 @@ class HeadingSubheading extends StatelessWidget {
                 TextSpan(
                   text: subHeadingTapText,
                   recognizer: TapGestureRecognizer()..onTap = onTap,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Colors.blue,
+                    color: onTap == null ? Colors.grey.shade800 : Colors.blue,
                     fontSize: 16,
                   ),
                 ),
@@ -57,5 +58,35 @@ class HeadingSubheading extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class TextTapText extends StatelessWidget {
+  const TextTapText(
+      {super.key, required this.text, required this.tapText, this.onTap});
+  final String text;
+  final String tapText;
+  final Function()? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+        text: TextSpan(
+            text: "$text ",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
+              fontWeight: FontWeight.w600,
+            ),
+            children: [
+          TextSpan(
+            text: tapText,
+            recognizer: TapGestureRecognizer()..onTap = onTap,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        ]));
   }
 }

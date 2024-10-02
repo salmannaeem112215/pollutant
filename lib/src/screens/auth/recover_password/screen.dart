@@ -10,16 +10,20 @@ import 'package:pollutant/src/screens/shared/logo.dart';
 
 import '../shared/text_form_field.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RecoverPassword extends StatefulWidget {
+  const RecoverPassword({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RecoverPassword> createState() => _RecoverPasswordState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RecoverPasswordState extends State<RecoverPassword> {
   toLogin() {
     Get.back();
+  }
+
+  onSubmitTap() {
+    Get.offAndToNamed(AppRoutes.rChangePassword);
   }
 
   final RxBool isChecked = false.obs;
@@ -43,73 +47,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   HeadingSubheading(
-                    headingText: 'Welcome',
-                    subHeadingText: 'Create an account or',
+                    headingText: 'Recover Password',
+                    subHeadingText: 'Or',
                     subHeadingTapText: 'Login',
-                    subHeadingTrailingText: 'here.',
                     onTap: toLogin,
                   ),
                   const SizedBox(
                     height: 40,
                   ),
                   const MyTextFormField(
-                    title: 'Email',
+                    title: 'Email/  Username',
                   ),
-                  const SizedBox(height: 20),
-                  const MyTextFormField(
-                    title: 'Password',
-                  ),
-                  const MyTextFormField(
-                    title: 'Confirm Password',
-                  ),
-                  const SizedBox(height: 20),
-                  TermsAndConditionCheckTile(isChecked: isChecked),
                   const SizedBox(height: 35),
-                  FormPrimaryBtn(text: 'Create Account', onTap: onCreateTap),
+                  FormPrimaryBtn(text: 'Submit', onTap: onSubmitTap),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 50)
           ],
         ),
-      ),
-    );
-  }
-
-  onCreateTap() {
-    Get.offAndToNamed(AppRoutes.rMsgEmailVerification);
-  }
-}
-
-class TermsAndConditionCheckTile extends StatelessWidget {
-  const TermsAndConditionCheckTile({
-    super.key,
-    required this.isChecked,
-  });
-
-  final RxBool isChecked;
-
-  toTermsAndConditions() {
-    Get.toNamed(AppRoutes.rTermsAndConditions);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => Row(
-        children: [
-          Checkbox(
-              value: isChecked.value,
-              onChanged: (v) {
-                isChecked.value = v!;
-              }),
-          TextTapText(
-            text: 'I agree to the ',
-            tapText: 'Terms & Conditions',
-            onTap: toTermsAndConditions,
-          )
-        ],
       ),
     );
   }

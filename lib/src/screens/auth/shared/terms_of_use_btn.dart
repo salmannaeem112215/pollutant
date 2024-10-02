@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pollutant/src/routes/app_routes.dart';
 
 class TermsOfUseBtn extends StatelessWidget {
   const TermsOfUseBtn({super.key});
@@ -6,7 +8,9 @@ class TermsOfUseBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.toNamed(AppRoutes.rTermsOfUser);
+      },
       child: Text(
         'Terms of Use',
         style: TextStyle(
